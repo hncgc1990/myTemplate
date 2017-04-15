@@ -2,7 +2,7 @@ package com.hncgc1990.dagger2demo.injection.component;
 
 import com.hncgc1990.dagger2demo.injection.module.ActivityModule;
 import com.hncgc1990.dagger2demo.injection.PerActivity;
-import com.hncgc1990.dagger2demo.ui.yywu1.activity.MainActivity;
+import com.hncgc1990.dagger2demo.ui.main.activity.MainActivity;
 
 import dagger.Component;
 

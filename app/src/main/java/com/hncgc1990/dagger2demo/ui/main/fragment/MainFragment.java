@@ -1,4 +1,4 @@
-package com.hncgc1990.dagger2demo.ui.yywu1.fragment;
+package com.hncgc1990.dagger2demo.ui.main.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,18 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hncgc1990.dagger2demo.R;
+import com.hncgc1990.dagger2demo.data.model.Result;
 import com.hncgc1990.dagger2demo.ui.MainContract;
 import com.hncgc1990.dagger2demo.ui.MainPresenter;
-import com.hncgc1990.dagger2demo.ui.yywu1.adapter.MyItemRecyclerViewAdapter;
-import com.hncgc1990.dagger2demo.ui.dummy.DummyContent;
-import com.hncgc1990.dagger2demo.ui.dummy.DummyContent.DummyItem;
+import com.hncgc1990.dagger2demo.ui.main.adapter.MyItemRecyclerViewAdapter;
 
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import java.util.List;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
@@ -62,18 +56,7 @@ public class MainFragment extends Fragment implements MainContract.View {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
         setUpList(view);
 
-        mMainPresenter.start();
-
-
-        Observable.just(1).delay(3, TimeUnit.SECONDS).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        mMainPresenter.showList();
-                    }
-                });
-
+        mMainPresenter.loadData();
         return view;
     }
 
@@ -113,8 +96,8 @@ public class MainFragment extends Fragment implements MainContract.View {
     }
 
     @Override
-    public void showList() {
-        mRecyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+    public void showList(List<Result> list) {
+        mRecyclerView.setAdapter(new MyItemRecyclerViewAdapter(list, mListener));
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
@@ -132,6 +115,6 @@ public class MainFragment extends Fragment implements MainContract.View {
 
 
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Result item);
     }
 }

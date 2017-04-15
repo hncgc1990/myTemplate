@@ -1,14 +1,14 @@
-package com.hncgc1990.dagger2demo.ui.yywu1.activity;
+package com.hncgc1990.dagger2demo.ui.main.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hncgc1990.dagger2demo.DemoApplication;
+import com.hncgc1990.dagger2demo.data.model.Result;
+import com.hncgc1990.dagger2demo.injection.component.DaggerActivityComponent;
 import com.hncgc1990.dagger2demo.injection.module.ActivityModule;
-import com.hncgc1990.dagger2demo.injection.DaggerActivityComponent;
-import com.hncgc1990.dagger2demo.ui.yywu1.fragment.MainFragment;
 import com.hncgc1990.dagger2demo.ui.MainPresenter;
-import com.hncgc1990.dagger2demo.ui.dummy.DummyContent;
+import com.hncgc1990.dagger2demo.ui.main.fragment.MainFragment;
 
 import javax.inject.Inject;
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnLi
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(Result item) {
         //点击列表项目
     }
 }

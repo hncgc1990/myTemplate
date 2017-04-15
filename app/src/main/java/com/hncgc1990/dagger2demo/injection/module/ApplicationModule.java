@@ -4,11 +4,13 @@ import android.content.Context;
 import android.location.LocationManager;
 
 import com.hncgc1990.dagger2demo.DemoApplication;
+import com.hncgc1990.dagger2demo.data.remote.DemoRetrofitFactory;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 /**
  * Created by Administrator on 2017/4/13.
@@ -36,5 +38,13 @@ public class ApplicationModule {
     public LocationManager provideLocationManager(){
         return (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
     }
+
+    @Singleton
+    @Provides
+    public Retrofit provideRetrofit(){
+        return DemoRetrofitFactory.getInstance();
+    }
+
+
 
 }
