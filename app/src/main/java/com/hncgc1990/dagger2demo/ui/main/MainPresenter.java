@@ -1,4 +1,4 @@
-package com.hncgc1990.dagger2demo.ui;
+package com.hncgc1990.dagger2demo.ui.main;
 
 import com.hncgc1990.dagger2demo.data.DataManager;
 import com.hncgc1990.dagger2demo.data.model.PostData;
@@ -24,9 +24,11 @@ public class MainPresenter implements MainContract.Presenter{
     MainContract.View mView;
 
 
+    Disposable disposable;
+
+
     @Inject
     public DataManager dataManager;
-
 
 
 
@@ -50,9 +52,15 @@ public class MainPresenter implements MainContract.Presenter{
     }
 
     @Override
+    public void destroy() {
+        //取消订阅
+        if(disposable!=null && !disposable.isDisposed()){
+            disposable.dispose();
+        }
+    }
+
+    @Override
     public void loadData() {
-
-
 
         dataManager.getPostList()
                 .compose(SchedulerHelper.<PostData<List<Result>>>applySchedulers())
@@ -70,7 +78,7 @@ public class MainPresenter implements MainContract.Presenter{
                 .subscribe(new Observer<PostData<List<Result>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        disposable=d;
                     }
 
                     @Override

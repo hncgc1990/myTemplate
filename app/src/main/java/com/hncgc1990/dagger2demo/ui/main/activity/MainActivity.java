@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.hncgc1990.dagger2demo.DemoApplication;
 import com.hncgc1990.dagger2demo.data.model.Result;
-import com.hncgc1990.dagger2demo.injection.component.DaggerActivityComponent;
-import com.hncgc1990.dagger2demo.injection.module.ActivityModule;
-import com.hncgc1990.dagger2demo.ui.MainPresenter;
+import com.hncgc1990.dagger2demo.injection.component.DaggerMainActivityComponent;
+import com.hncgc1990.dagger2demo.injection.module.MainActivityModule;
+import com.hncgc1990.dagger2demo.ui.main.MainPresenter;
 import com.hncgc1990.dagger2demo.ui.main.fragment.MainFragment;
 
 import javax.inject.Inject;
@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnLi
         getSupportFragmentManager().beginTransaction().add(android.R.id.content,mainFragment).commit();
 
         //注入
-        DaggerActivityComponent.builder()
+        DaggerMainActivityComponent.builder()
                 .applicationComponent(((DemoApplication)getApplication()).getApplicationComponent())
-                .activityModule(new ActivityModule(mainFragment))
+                .mainActivityModule(new MainActivityModule(mainFragment))
                 .build()
                 .inject(this);
 

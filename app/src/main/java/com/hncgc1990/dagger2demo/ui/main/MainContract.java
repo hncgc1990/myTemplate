@@ -1,4 +1,4 @@
-package com.hncgc1990.dagger2demo.ui;
+package com.hncgc1990.dagger2demo.ui.main;
 
 import com.hncgc1990.dagger2demo.data.model.Result;
 import com.hncgc1990.dagger2demo.ui.base.BasePresenter;

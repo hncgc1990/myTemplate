@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.hncgc1990.dagger2demo.R;
 import com.hncgc1990.dagger2demo.data.model.Result;
-import com.hncgc1990.dagger2demo.ui.MainContract;
-import com.hncgc1990.dagger2demo.ui.MainPresenter;
+import com.hncgc1990.dagger2demo.ui.main.MainContract;
+import com.hncgc1990.dagger2demo.ui.main.MainPresenter;
 import com.hncgc1990.dagger2demo.ui.main.adapter.MyItemRecyclerViewAdapter;
 
 import java.util.List;
