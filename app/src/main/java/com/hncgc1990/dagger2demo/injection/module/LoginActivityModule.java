@@ -1,7 +1,7 @@
 package com.hncgc1990.dagger2demo.injection.module;
 
 import com.hncgc1990.dagger2demo.injection.PerActivity;
-import com.hncgc1990.dagger2demo.ui.MainContract;
+import com.hncgc1990.dagger2demo.ui.login.LoginContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -11,14 +11,14 @@ import dagger.Provides;
  */
 @Module
 @PerActivity
-public class ActivityModule {
-    private MainContract.View mView;
+public class LoginActivityModule {
+    private LoginContract.View mView;
 
-    public ActivityModule(MainContract.View view){
+    public LoginActivityModule(LoginContract.View view){
         mView=view;
     }
     @Provides
-    public MainContract.View provideMainContractView(){
+    public LoginContract.View provideMainContractView(){
         return mView;
     }
 }

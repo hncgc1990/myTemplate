@@ -6,4 +6,7 @@ package com.hncgc1990.dagger2demo.ui.base;
 public interface BasePresenter {
 
     void start();
+
+
+    void destroy();
 }
