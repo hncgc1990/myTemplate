@@ -1,8 +1,9 @@
-package com.hncgc1990.dagger2demo.ui.login;
+package com.hncgc1990.dagger2demo.ui.login.presenter;
 
 import android.text.TextUtils;
 
 import com.hncgc1990.dagger2demo.exception.InvalidateException;
+import com.hncgc1990.dagger2demo.ui.login.contract.LoginContract;
 import com.hncgc1990.dagger2demo.util.SchedulerHelper;
 
 import java.util.concurrent.TimeUnit;
@@ -23,14 +24,13 @@ public class LoginPresent implements LoginContract.Presenter{
     LoginContract.View view;
 
     @Inject
-    public LoginPresent(LoginContract.View view){
-        this.view=view;
+    public LoginPresent(){
     }
 
 
-    @Inject
-    public void  setup(){
-    view.setPresenter(this);
+    public void  attachView(LoginContract.View view){
+        this.view=view;
+        view.setPresenter(this);
     }
 
 

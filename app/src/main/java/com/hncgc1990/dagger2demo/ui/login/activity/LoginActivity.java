@@ -1,4 +1,4 @@
-package com.hncgc1990.dagger2demo.ui.login;
+package com.hncgc1990.dagger2demo.ui.login.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -17,10 +17,13 @@ import android.widget.Toast;
 import com.hncgc1990.dagger2demo.DemoApplication;
 import com.hncgc1990.dagger2demo.R;
 import com.hncgc1990.dagger2demo.injection.component.DaggerLoginActivityComponent;
-import com.hncgc1990.dagger2demo.injection.module.LoginActivityModule;
+import com.hncgc1990.dagger2demo.ui.login.contract.LoginContract;
+import com.hncgc1990.dagger2demo.ui.login.presenter.LoginPresent;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxbinding2.widget.TextViewEditorActionEvent;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -29,7 +32,7 @@ import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 
 /**
- * 登录界面
+ * 修改的AS自带的登录界面模板
  */
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
 
@@ -65,13 +68,14 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         super.onCreate(savedInstanceState);
         DaggerLoginActivityComponent.builder()
                 .applicationComponent(((DemoApplication)getApplication()).getApplicationComponent())
-                .loginActivityModule(new LoginActivityModule(this))
+//                .loginActivityModule(new LoginActivityModule(this))
                 .build()
                 .inject(this);
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
 
+        mPresent.attachView(this);
 
         RxTextView.editorActionEvents(mPasswordView).subscribe(new Consumer<TextViewEditorActionEvent>() {
             @Override
@@ -83,7 +87,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             }
         });
 
-        RxView.clicks(mEmailSignInButton).subscribe(new Consumer<Object>() {
+        RxView.clicks(mEmailSignInButton)
+                .debounce(500, TimeUnit.MICROSECONDS)
+                .subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
                 mPresent.login();

@@ -1,7 +1,8 @@
-package com.hncgc1990.dagger2demo.ui.login;
+package com.hncgc1990.dagger2demo.ui.login.contract;
 
 import com.hncgc1990.dagger2demo.ui.base.BasePresenter;
 import com.hncgc1990.dagger2demo.ui.base.BaseView;
+import com.hncgc1990.dagger2demo.ui.login.presenter.LoginPresent;
 
 /**
  * Created by Administrator on 2017-4-17.
