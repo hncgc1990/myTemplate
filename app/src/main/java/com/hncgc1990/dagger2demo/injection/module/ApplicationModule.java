@@ -5,6 +5,7 @@ import android.location.LocationManager;
 
 import com.hncgc1990.dagger2demo.DemoApplication;
 import com.hncgc1990.dagger2demo.data.remote.DemoRetrofitFactory;
+import com.hncgc1990.dagger2demo.injection.ApplicationContext;
 
 import javax.inject.Singleton;
 
@@ -28,6 +29,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
+    @ApplicationContext
     public Context provideApplicationContext(){
 
         return mContext;

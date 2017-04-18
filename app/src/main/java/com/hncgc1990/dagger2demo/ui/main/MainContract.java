@@ -24,7 +24,9 @@ public interface MainContract {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<View> {
+
+
 
 
         void loadData();

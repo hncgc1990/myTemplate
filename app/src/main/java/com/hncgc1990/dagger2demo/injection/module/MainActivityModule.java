@@ -1,7 +1,10 @@
 package com.hncgc1990.dagger2demo.injection.module;
 
+import android.app.Activity;
+import android.content.Context;
+
+import com.hncgc1990.dagger2demo.injection.ActivityContext;
 import com.hncgc1990.dagger2demo.injection.PerActivity;
-import com.hncgc1990.dagger2demo.ui.main.MainContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,13 +15,24 @@ import dagger.Provides;
 @Module
 @PerActivity
 public class MainActivityModule {
-    private MainContract.View mView;
 
-    public MainActivityModule(MainContract.View view){
-        mView=view;
+
+    Activity mContext;
+
+    public MainActivityModule(Activity context){
     }
+
+
     @Provides
-    public MainContract.View provideMainContractView(){
-        return mView;
+    public Activity provideActivity(){
+        return mContext;
     }
+
+    @Provides
+    @ActivityContext
+    public Context provideContext(){
+        return mContext;
+    }
+
+
 }

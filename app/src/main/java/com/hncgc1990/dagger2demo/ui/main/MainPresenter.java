@@ -33,26 +33,22 @@ public class MainPresenter implements MainContract.Presenter{
 
 
     @Inject
-    public MainPresenter(MainContract.View view){
-        mView=view;
+    public MainPresenter(){
     }
 
 
+    @Override
+    public void attachView(MainContract.View view){
 
-    @Inject
-    public void setUp(){
+            mView=view;
         mView.setPresenter(this);
     }
 
 
 
-    @Override
-    public void start() {
-
-    }
 
     @Override
-    public void destroy() {
+    public void detachView() {
         //取消订阅
         if(disposable!=null && !disposable.isDisposed()){
             disposable.dispose();

@@ -12,6 +12,9 @@ import com.hncgc1990.dagger2demo.ui.main.fragment.MainFragment;
 
 import javax.inject.Inject;
 
+/**
+ * 一个简单的加载列表数据(使用Frgment的mvp结构)
+ */
 public class MainActivity extends AppCompatActivity implements MainFragment.OnListFragmentInteractionListener {
 
     @Inject
@@ -28,9 +31,11 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnLi
         //注入
         DaggerMainActivityComponent.builder()
                 .applicationComponent(((DemoApplication)getApplication()).getApplicationComponent())
-                .mainActivityModule(new MainActivityModule(mainFragment))
+                .mainActivityModule(new MainActivityModule(this))
                 .build()
                 .inject(this);
+
+        mMainPresenter.attachView(mainFragment);
 
     }
 
@@ -38,4 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnLi
     public void onListFragmentInteraction(Result item) {
         //点击列表项目
     }
+
+
+
 }

@@ -5,8 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -21,7 +21,6 @@ import com.hncgc1990.dagger2demo.ui.login.contract.LoginContract;
 import com.hncgc1990.dagger2demo.ui.login.presenter.LoginPresent;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
-import com.jakewharton.rxbinding2.widget.TextViewEditorActionEvent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,10 +28,12 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
 /**
- * 修改的AS自带的登录界面模板
+ * 修改的AS自带的登录界面模板 (不使用Fragment的mvp形式)
  */
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
 
@@ -68,7 +69,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         super.onCreate(savedInstanceState);
         DaggerLoginActivityComponent.builder()
                 .applicationComponent(((DemoApplication)getApplication()).getApplicationComponent())
-//                .loginActivityModule(new LoginActivityModule(this))
                 .build()
                 .inject(this);
         setContentView(R.layout.activity_login);
@@ -77,24 +77,32 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         mPresent.attachView(this);
 
-        RxTextView.editorActionEvents(mPasswordView).subscribe(new Consumer<TextViewEditorActionEvent>() {
-            @Override
-            public void accept(TextViewEditorActionEvent textViewEditorActionEvent) throws Exception {
-                int id = textViewEditorActionEvent.actionId();
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    mPresent.login();
-                }
-            }
-        });
+//        RxTextView.editorActionEvents(mPasswordView).subscribe(new Consumer<TextViewEditorActionEvent>() {
+//            @Override
+//            public void accept(TextViewEditorActionEvent textViewEditorActionEvent) throws Exception {
+//                int id = textViewEditorActionEvent.actionId();
+//                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+//                    mPresent.login();
+//                }
+//            }
+//        });
 
         RxView.clicks(mEmailSignInButton)
                 .debounce(500, TimeUnit.MICROSECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
+                Log.d("chen","点击事件的线程"+Thread.currentThread().getName());
                 mPresent.login();
             }
         });
+
+
+        Observable<CharSequence> mailObservable = RxTextView.textChanges(mEmailView).skip(1);
+        Observable<CharSequence> passObservable = RxTextView.textChanges(mPasswordView).skip(1);
+        mPresent.invalidateForm(mailObservable,passObservable);
+
 
     }
 
@@ -174,6 +182,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     public void showPassError(String error) {
         mPasswordView.setError(error);
         mPasswordView.requestFocus();
+    }
+
+    @Override
+    public void enableButton(boolean isenable) {
+        mEmailSignInButton.setEnabled(isenable);
     }
 
 
