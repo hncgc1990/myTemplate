@@ -52,11 +52,11 @@ public class LoginPresent implements LoginContract.Presenter{
             public Object apply(Object o) throws Exception {
                 Log.d("chen","当前的线程:"+Thread.currentThread().getName());
                 Thread.sleep(2000);
-                if(!email.equals("123456")){
+                if(!email.equals("user@xx.com")){
                     throw new InvalidateException("用户名或密码错误",InvalidateException.PASS);
                 }
 
-                if(!password.equals("user@xx.com")){
+                if(!password.equals("123456")){
                     throw new InvalidateException("用户名或密码错误",InvalidateException.USERNAME);
                 }
 

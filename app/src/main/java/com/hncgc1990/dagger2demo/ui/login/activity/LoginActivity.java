@@ -2,6 +2,7 @@ package com.hncgc1990.dagger2demo.ui.login.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.hncgc1990.dagger2demo.R;
 import com.hncgc1990.dagger2demo.injection.component.DaggerLoginActivityComponent;
 import com.hncgc1990.dagger2demo.ui.login.contract.LoginContract;
 import com.hncgc1990.dagger2demo.ui.login.presenter.LoginPresent;
+import com.hncgc1990.dagger2demo.ui.main.activity.MainActivity;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
@@ -131,6 +133,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void showLoginSuccess() {
         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

@@ -45,8 +45,6 @@ public class MainPresenter implements MainContract.Presenter{
     }
 
 
-
-
     @Override
     public void detachView() {
         //取消订阅

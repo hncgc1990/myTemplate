@@ -1,6 +1,7 @@
 package com.hncgc1990.dagger2demo.injection.component;
 
 import com.hncgc1990.dagger2demo.injection.PerActivity;
+import com.hncgc1990.dagger2demo.injection.module.LoginActivityModule;
 import com.hncgc1990.dagger2demo.ui.login.activity.LoginActivity;
 
 import dagger.Component;
@@ -10,7 +11,7 @@ import dagger.Component;
  */
 
 @PerActivity
-@Component(dependencies = ApplicationComponent.class)
+@Component(dependencies = ApplicationComponent.class,modules = LoginActivityModule.class)
 public interface LoginActivityComponent {
 
 

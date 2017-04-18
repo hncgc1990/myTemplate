@@ -9,8 +9,13 @@ import android.widget.TextView;
 import com.hncgc1990.dagger2demo.R;
 import com.hncgc1990.dagger2demo.data.model.Result;
 import com.hncgc1990.dagger2demo.ui.main.fragment.MainFragment.OnListFragmentInteractionListener;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.functions.Consumer;
 
 
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
@@ -36,9 +41,10 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         holder.mIdView.setText(mValues.get(position).getDesc());
         holder.mContentView.setText(mValues.get(position).getWho());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+
+        RxView.clicks(holder.mView).subscribe(new Consumer<Object>() {
             @Override
-            public void onClick(View v) {
+            public void accept(Object o) throws Exception {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
@@ -46,6 +52,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                 }
             }
         });
+
     }
 
     @Override
@@ -54,16 +61,21 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+
+        @BindView(R.id.id)
+        public TextView mIdView;
+
+        @BindView(R.id.content)
+        public TextView mContentView;
+
+        public View mView;
+
         public Result mItem;
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mView=view;
+            ButterKnife.bind(this,view);
         }
 
         @Override

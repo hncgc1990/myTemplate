@@ -2,6 +2,7 @@ package com.hncgc1990.dagger2demo.ui.main.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.hncgc1990.dagger2demo.DemoApplication;
 import com.hncgc1990.dagger2demo.data.model.Result;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnLi
     @Override
     public void onListFragmentInteraction(Result item) {
         //点击列表项目
+        Toast.makeText(MainActivity.this, "点击了item", Toast.LENGTH_SHORT).show();
     }
 
 
